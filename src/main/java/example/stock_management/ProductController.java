@@ -4,10 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.security.Principal;
+
 
 
 import java.net.URI;
@@ -34,13 +34,13 @@ public class ProductController {
                                                UriComponentsBuilder ucb,
                                                Principal principal) {
         Product productWithOwner = new Product(null,
-                newProductRequest.name(),
-                newProductRequest.price(),
+                newProductRequest.getName(),
+                newProductRequest.getPrice(),
                 principal.getName());
         Product savedProduct = productRepository.save(productWithOwner);
         URI locationOfNewProduct = ucb
                 .path("products/{id}")
-                .buildAndExpand(savedProduct.id())
+                .buildAndExpand(savedProduct.getId())
                 .toUri();
         return ResponseEntity.created(locationOfNewProduct).build();
     }
@@ -62,7 +62,7 @@ public class ProductController {
                                              Principal principal) {
         Product product = productRepository.findByIdAndOwner(requestedId, principal.getName());
         if (product != null) {
-            Product updatedProduct = new Product(product.id(), product.name(), productUpdate.price(), principal.getName());
+            Product updatedProduct = new Product(product.getId(), product.getName(), productUpdate.getPrice(), principal.getName());
             productRepository.save(updatedProduct);
             return ResponseEntity.noContent().build();
         }
