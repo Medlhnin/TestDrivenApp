@@ -50,8 +50,8 @@ public class ProductJsonTest {
                 """;
         assertThat(json.parse(expected))
                 .isEqualTo(new Product(99L, "Product 99",123.45, "sarah1"));
-        assertThat(json.parseObject(expected).id()).isEqualTo(99);
-        assertThat(json.parseObject(expected).price()).isEqualTo(123.45);
+        assertThat(json.parseObject(expected).getId()).isEqualTo(99);
+        assertThat(json.parseObject(expected).getPrice()).isEqualTo(123.45);
     }
 
     @Test

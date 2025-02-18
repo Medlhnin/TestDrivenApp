@@ -8,6 +8,8 @@ import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Setter
 @Getter
@@ -38,5 +40,22 @@ public class Product {
                 ", owner='" + owner + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Product product = (Product) obj;
+        return Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(price, product.price) &&
+                Objects.equals(owner, product.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, owner);
+    }
+
 }
 
